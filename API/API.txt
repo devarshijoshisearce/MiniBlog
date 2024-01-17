@@ -1,1 +1,9 @@
-Contains all backend files
+- Contains all backend files
+
+- MongoDB Credentials:
+    Username: MiniBlog
+    Password: MiniTeam2
+
+- Modules
+    Login/Signup - Users
+    CRUD - Blogs
