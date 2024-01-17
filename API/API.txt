@@ -3,3 +3,7 @@
 - MongoDB Credentials:
     Username: MiniBlog
     Password: MiniTeam2
+
+- Modules
+    Login/Signup - Users
+    CRUD - Blogs
