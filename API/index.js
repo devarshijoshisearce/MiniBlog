@@ -1,6 +1,10 @@
 const express=require("express")
 const app=express()
-const port=3000
+require('dotenv').config()
+console.log(process.env.PORT)
+
+
+const port=process.env.PORT ?? 2324
 
 app.get('/',()=>{
     console.log("App get");
@@ -9,5 +13,7 @@ app.get('/',()=>{
 app.listen(port,()=>{
     console.log("Listening on Port "+port);
 })
+
+
 
 // console.log("Hello")
