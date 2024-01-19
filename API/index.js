@@ -1,18 +1,26 @@
 const express=require("express")
 const app=express()
-require('dotenv').config()
-console.log(process.env.PORT)
+app.use(express.json())
 
+require('dotenv').config()
 
 const port=process.env.PORT ?? 2324
+
+const dbConnection=require('./databases/connect')
+
+dbConnection.then(()=>{
+    app.listen(port,()=>{
+        console.log("Listening on Port "+port);
+    })
+}).catch((error)=>{
+    console.log('Problem to connect with database');
+})
 
 app.get('/',()=>{
     console.log("App get");
 })
 
-app.listen(port,()=>{
-    console.log("Listening on Port "+port);
-})
+
 
 
 
