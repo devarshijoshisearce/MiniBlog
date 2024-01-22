@@ -1,30 +1,26 @@
 const mongoose = require("mongoose")    //importing mongoose
 
-const CommentSchema = require("Comments") //importing comment schema
-
-//author, title, content, likes, comments (Content, Timestamp, Like), Timestamp, 
-const BlogSchema = new mongoose.Schema(
+//author, parentID, content, likes, replies (Content, Timestamp, Like), Timestamp, 
+const CommentSchema = new mongoose.Schema(
     {
         author : {
             type : String,
             required : [true, "author is needed"]
         },
-        title : {
+        // Parent ID is post ID if original comment, else parent comment if a reply. 
+        parentid :{
             type : String,
-            required : [true, "title is needed"]
+            required : [true, "Parent ID is needed"]
         },
         content : {
             type : String,
             required : [true, "Content is needed"]
         },
-        // Tuple of images. can be retrieved one at a time
-        img : [{
-            data : Buffer,
-            contentType : String
-        }],
+        // +1 if button is pressed
         upvotes : {
             type : Number
         },
+        // +1 if button is pressed
         downvotes : {
             type : Number
         },
@@ -32,8 +28,7 @@ const BlogSchema = new mongoose.Schema(
             type : Date,
             default : Date.now
         },
-        comments : {
-            type : CommentSchema
-        }
+        replies : [this]
     }
 )
+module.exports = mongoose.model("Comments", CommentSchema)    //Export
