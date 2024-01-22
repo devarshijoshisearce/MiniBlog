@@ -6,6 +6,7 @@ const controller = {
     try {
       const {
         author,
+        authorID,
         title,
         content,
         img,
@@ -18,6 +19,7 @@ const controller = {
       // Save the blog to the database
       const sendBlog = await Blog.create({
         author,
+        authorID,
         title,
         content,
         img,
@@ -65,7 +67,22 @@ const controller = {
     {
         next(error);
     }
+  },
+
+  async viewBlogsbyAuthorID(req, res, next)
+  {
+    try{
+        writerID = req.params.writerid
+        const blogs = await Blog.find({authorID : writerID})
+        res.status(201).send(blogs);
+    } catch(error)
+    {
+        next(error);
+    }
   }
+
+
+
 };
 
 module.exports = controller;

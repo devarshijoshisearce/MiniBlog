@@ -9,6 +9,10 @@ const BlogSchema = new mongoose.Schema(
             type : String,
             required : [true, "author is needed"]
         },
+        authorID : {
+            type : String,
+            required : [true, "authorID  is needed"]
+        },
         title : {
             type : String,
             required : [true, "title is needed"]
