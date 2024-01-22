@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")    //importing mongoose
 
-// const CommentSchema = require('../models/Comments') //importing comment schema
+const CommentSchema = require("../models/Comments") //importing comment schema
 
 //author, title, content, likes, comments (Content, Timestamp, Like), Timestamp, 
 const BlogSchema = new mongoose.Schema(
@@ -32,8 +32,6 @@ const BlogSchema = new mongoose.Schema(
             type : Date,
             default : Date.now
         },
-        // comments : {
-        //     type : CommentSchema
-        // }
+        comments : [{type : mongoose.Schema.Types.ObjectId, ref : 'CommentSchema'}]
     }
 )
