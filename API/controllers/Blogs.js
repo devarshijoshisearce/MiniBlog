@@ -1,5 +1,6 @@
+const { write } = require("fs");
 const Blog = require("../models/Blogs");
-
+const Temp = "65ae5a254f046fd681538ccc";
 const controller = {
   async createBlogs(req, res, next) {
     try {
@@ -14,8 +15,8 @@ const controller = {
         comments,
       } = req.body;
 
-      // Create a new blog instance
-      const newBlog = new Blog({
+      // Save the blog to the database
+      const sendBlog = await Blog.create({
         author,
         title,
         content,
@@ -25,11 +26,8 @@ const controller = {
         timestamp,
         comments,
       });
-
-      // Save the blog to the database
-      await newBlog.save();
-
-      res.status(201).json({ message: "Blog created successfully", Blog: newBlog });
+      res.status(201).send(sendBlog);
+    //   res.status(201).json({ message: "Blog created successfully" });
     } catch (error) {
       next(error); // Pass the error to the error-handling middleware
     }
@@ -45,6 +43,29 @@ const controller = {
       next(error);
     }
   },
+  
+  async viewBlogsbyID(req, res, next){
+    try{
+        // console.log("Temp is ", Temp);
+        id = req.params.id
+        const blogs = await Blog.findById(id)
+        res.status(201).send(blogs);
+    } catch (error){
+        next(error);
+    }
+  },
+
+  async viewBlogsbyAuthor(req, res, next)
+  {
+    try{
+        writer = req.params.writer
+        const blogs = await Blog.find({author : writer})
+        res.status(201).send(blogs);
+    } catch(error)
+    {
+        next(error);
+    }
+  }
 };
 
 module.exports = controller;

@@ -35,3 +35,5 @@ const BlogSchema = new mongoose.Schema(
         comments : [{type : mongoose.Schema.Types.ObjectId, ref : 'CommentSchema'}]
     }
 )
+
+module.exports = mongoose.model("Blogs", BlogSchema)    //Export
