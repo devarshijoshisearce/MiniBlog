@@ -2,7 +2,7 @@ const mongoose = require("mongoose")    //importing mongoose
 
 const CommentSchema = require("../models/Comments") //importing comment schema
 
-//author, title, content, likes, comments (Content, Timestamp, Like), Timestamp, 
+//author, title, content, img, upvotes, downvotes, timestamp, comments
 const BlogSchema = new mongoose.Schema(
     {
         author : {
