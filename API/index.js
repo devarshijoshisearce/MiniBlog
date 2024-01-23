@@ -1,4 +1,5 @@
 const express=require("express")
+const cors=require('cors')
 const app=express()
 const cookie=require("cookie-parser")
 require('dotenv').config()
@@ -6,6 +7,7 @@ require('dotenv').config()
 //middleware
 app.use(express.json())    //to accept json body
 app.use(cookie())
+app.use(cors())
 
 //Just for testing 
 app.get('/',(req,res)=>{
