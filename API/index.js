@@ -1,11 +1,13 @@
 const express=require("express")
 const app=express()
 const cookie=require("cookie-parser")
+const cors = require("cors")
 require('dotenv').config()
 
 //middleware
 app.use(express.json())    //to accept json body
 app.use(cookie())
+app.use(cors())
 
 //Just for testing 
 app.get('/',(req,res)=>{
@@ -15,7 +17,6 @@ app.get('/',(req,res)=>{
 
 app.post('/signup', (req, res)=>{
     // res.json("This is the signup page")
-    
     console.log("Signup page accessed")
 })
 
