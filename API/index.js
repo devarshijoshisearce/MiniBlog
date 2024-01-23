@@ -10,6 +10,13 @@ app.use(cookie())
 //Just for testing 
 app.get('/',(req,res)=>{
     res.send("This is home page")
+    console.log("home page accessed")
+})
+
+app.post('/signup', (req, res)=>{
+    // res.json("This is the signup page")
+    
+    console.log("Signup page accessed")
 })
 
 //Routes
@@ -31,4 +38,6 @@ dbConnection.then(()=>{
 }).catch((error)=>{
     console.log('Problem to connect with database');
 })
+
+
 
