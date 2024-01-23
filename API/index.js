@@ -1,21 +1,27 @@
 const express=require("express")
 const app=express()
-app.use(express.json())
-
+const cookie=require("cookie-parser")
 require('dotenv').config()
 
+//middleware
+app.use(express.json())    //to accept json body
+app.use(cookie())
+
+//Just for testing 
 app.get('/',(req,res)=>{
     res.send("This is home page")
 })
 
+//Routes
 const authRouter=require('./routers/Users')
 app.use('/auth',authRouter)
 
 const blogRouter=require('./routers/Blogs')
 app.use('/blog',blogRouter)
 
-const port=process.env.PORT ?? 2324
 
+//Connection to db
+const port=process.env.PORT ?? 2324
 const dbConnection=require('./databases/connect')
 
 dbConnection.then(()=>{
@@ -26,12 +32,3 @@ dbConnection.then(()=>{
     console.log('Problem to connect with database');
 })
 
-app.get('/',()=>{
-    console.log("App get");
-})
-
-
-
-
-
-// console.log("Hello")
