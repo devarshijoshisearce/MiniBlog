@@ -1,6 +1,6 @@
 const { write } = require("fs");
 const Blog = require("../models/Blogs");
-const Temp = "65ae5a254f046fd681538ccc";
+// const Temp = "65ae5a254f046fd681538ccc";
 const controller = {
   async createBlogs(req, res, next) {
     try {
@@ -13,7 +13,6 @@ const controller = {
         upvotes,
         downvotes,
         timestamp,
-        comments,
       } = req.body;
 
       // Save the blog to the database
@@ -26,7 +25,6 @@ const controller = {
         upvotes,
         downvotes,
         timestamp,
-        comments,
       });
       res.status(201).send(sendBlog);
     //   res.status(201).json({ message: "Blog created successfully" });
