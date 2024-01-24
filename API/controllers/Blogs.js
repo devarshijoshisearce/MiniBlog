@@ -101,6 +101,46 @@ const controller = {
     {
         next(error);
     }
+  },
+
+  async updateBlogsbyID(req, res, next)
+  {
+    try{
+      const {postID, 
+        userID,
+        author,
+        authorID,
+        title,
+        content,
+        img,
+        upvotes,
+        downvotes,
+        timestamp,} = req.body;
+
+        
+
+        if (authorID == userID)     //verify that the user is the author
+        {
+            // const blogs = await Blog.findByIdAndDelete(postID)      //find the specific post and delete it from the database
+            const sendBlog = {
+              author : author, 
+              title : title, 
+              content : content, 
+              img : img, 
+              upvotes : upvotes, 
+              downvotes : downvotes, 
+              timestamp : timestamp
+            }
+            const blogs = await Blog.findByIdAndUpdate(postID, sendBlog)
+            res.status(201).send(sendBlog);
+        }
+        else
+        {
+            res.status(400).send("User is not authorized to update this post")
+        }
+    }catch (error) {
+      next(error); // Pass the error to the error-handling middleware
+    }
   }
 
 };
