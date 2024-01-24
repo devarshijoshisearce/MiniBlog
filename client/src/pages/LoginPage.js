@@ -8,18 +8,13 @@ export default function LoginPage() {
 
     async function login(ev){
         ev.preventDefault();
-        console.log("Started")
-        console.log("emailID outside: ", emailID)
-        console.log("password outside: ", password)
         fetch('http://localhost:3000/auth/login',{
             method: 'POST',
             body: JSON.stringify({emailID,password}),
             headers: {'Content-type':'application/json'},
-            credentials: 'include',
+            // credentials: 'include',
         }
         ).then(res=>{
-            console.log("emailID: ", emailID)
-            console.log("password: ", password)
             if(res.ok){
                 console.log("Login credentials ok.")
                 setRedirect(true);
@@ -30,7 +25,7 @@ export default function LoginPage() {
         
 
         if (redirect) {
-            return <Navigate to="/register" />
+            return <Navigate to={"/"} />
         }
     }
     return (
