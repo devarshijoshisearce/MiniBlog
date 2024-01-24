@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 export default function LoginPage() {
     const [emailID, setemailID] = useState('');
     const [password, setPassword] = useState('');
-    const [redirect, setRedirect] = useState(false);
+    const nav=useNavigate();
 
     async function login(ev){
         ev.preventDefault();
@@ -17,16 +17,11 @@ export default function LoginPage() {
         ).then(res=>{
             if(res.ok){
                 console.log("Login credentials ok.")
-                setRedirect(true);
+                nav("/")
             } else{      
                 alert("Login Failed - Wrong Credentials")
             }
         })
-        
-
-        if (redirect) {
-            return <Navigate to={"/"} />
-        }
     }
     return (
         <form className="login" onSubmit={login}>
