@@ -10,11 +10,17 @@ export default function RegisterPage() {
     const [gender, setGender] = useState('');
     async function register(ev){
         ev.preventDefault();
-         await fetch('http://localhost:3000/auth/signup',{
+         const response = await fetch('http://localhost:3000/auth/signup',{
             method: 'POST',
             body: JSON.stringify({username,password,emailID,name,age}),
             headers: {'Content-type':'application/json'},
         })
+
+        if(response.status === 200){
+            alert("Registration Successful");
+        }else{
+            alert("Registration Failed");
+        }    
 
     }
     return (
