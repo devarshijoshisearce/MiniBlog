@@ -2,7 +2,6 @@ const express=require("express")
 const cors=require('cors')
 const app=express()
 const cookie=require("cookie-parser")
-const cors = require("cors")
 require('dotenv').config()
 
 //middleware

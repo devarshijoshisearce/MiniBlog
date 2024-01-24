@@ -32,6 +32,7 @@ const controller={
     },
     async signup(req,res,next){
         const {username,emailID,password,name,age,gender}=req.body;
+        console.log(age);
 
         const existingUser=await User.findOne({emailID:emailID})  //check whether user already exists
         if(existingUser){
