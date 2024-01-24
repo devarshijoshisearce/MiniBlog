@@ -11,9 +11,9 @@ export default function RegisterPage() {
     const [gender, setGender] = useState('');
     async function register(ev){
         ev.preventDefault();
-         await fetch('http://localhost:3000/auth/signup',{
+         const response = await fetch('http://localhost:3000/auth/signup',{
             method: 'POST',
-            body: JSON.stringify({username,password,emailID,name,number}),
+            body: JSON.stringify({username,password,emailID,name,age}),
             headers: {'Content-type':'application/json'},
         })
 
@@ -37,7 +37,7 @@ export default function RegisterPage() {
             onChange={ev => setUsername(ev.target.value)}/>
 
             <input 
-            type="emailID" 
+            type="email" 
             name="emailID" 
             placeholder="emailID" 
             value={emailID}
@@ -61,8 +61,8 @@ export default function RegisterPage() {
             type="number" 
             name="age" 
             placeholder="Age" 
-            value={number}
-            onChange={ev => setNumber(ev.target.value)}/>
+            value={age}
+            onChange={ev => setAge(ev.target.value)}/>
 
             
             
