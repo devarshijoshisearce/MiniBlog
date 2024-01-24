@@ -6,25 +6,19 @@ export default function RegisterPage() {
     const [password, setPassword] = useState('');
     const [emailID, setemailID] = useState('');
     const [name, setName] = useState('');
-    const [age, setAge ]= useState('');
+    const [number, setNumber] = useState('');
     const [gender, setGender] = useState('');
     async function register(ev){
         ev.preventDefault();
-         const response = await fetch('http://localhost:3000/auth/signup',{
+         await fetch('http://localhost:3000/auth/signup',{
             method: 'POST',
-            body: JSON.stringify({username,password,emailID,name,age}),
+            body: JSON.stringify({username,password,emailID,name,number}),
             headers: {'Content-type':'application/json'},
         })
 
-        if(response.status === 200){
-            alert("Registration Successful");
-        }else{
-            alert("Registration Failed");
-        }    
-
     }
     return (
-        <form className="register" onSubmit={register} >
+        <form className="register" onSubmit={register}>
             <h1>Register</h1>
 
             <input 
@@ -35,7 +29,7 @@ export default function RegisterPage() {
             onChange={ev => setUsername(ev.target.value)}/>
 
             <input 
-            type="email" 
+            type="emailID" 
             name="emailID" 
             placeholder="emailID" 
             value={emailID}
@@ -59,8 +53,8 @@ export default function RegisterPage() {
             type="number" 
             name="age" 
             placeholder="Age" 
-            value={age}
-            onChange={ev => setAge(ev.target.value)}/>
+            value={number}
+            onChange={ev => setNumber(ev.target.value)}/>
 
             
             
