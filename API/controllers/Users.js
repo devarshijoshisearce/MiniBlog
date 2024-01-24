@@ -14,17 +14,31 @@ async function createToken(id){
 const controller={
     async login(req,res,next){
         try{
-            const user=await User.login(req.body.emailID,req.body.password,res);   //passed to middleware function to check if user exists
-            try{
-                const token=await createToken(user._id)
-                res.cookie("jwt",token,{
-                    maxAge:1000*60*60*24*2
-                })
-                res.send(token)
-            }catch{
-                res.status(404).json({message:"Problem to create tokens"})
-                return;
+            
+            const {emailID,password}=req.body
+            const user=await User.findOne({emailID});
+            if(user){
+                console.log("User");
+                const isCompare=await bcrypt.compare(password,user.password)
+                if(isCompare){
+                    try{
+                        console.log("Pass match")
+                        const token=await createToken(user._id)
+                        res.cookie("jwt",token,{
+                            maxAge:1000*60*60*24*2
+                        })
+                        res.send(token)
+                    }catch{
+                        res.status(404).json({message:"Problem to create tokens"})
+                        return;
+                    }
+                    // const user=await User.login(req.body.emailID,req.body.password,res);
+                }else{
+                    res.status(400).send("Invalid user")
+                }
             }
+            // const user=await User.login(req.body.emailID,req.body.password,res);   //passed to middleware function to check if user exists
+            
         }catch(error){
             res.status(404).json({message:"problem to get user details"})
             return;
@@ -32,7 +46,6 @@ const controller={
     },
     async signup(req,res,next){
         const {username,emailID,password,name,age,gender}=req.body;
-        console.log(age);
 
         const existingUser=await User.findOne({emailID:emailID})  //check whether user already exists
         if(existingUser){
