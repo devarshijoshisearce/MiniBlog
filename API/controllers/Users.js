@@ -10,6 +10,11 @@ async function createToken(id){
     return token;
 }
 
+// async function userProfile(id){
+//     const user= await User.findById(id);
+//     return user;
+// }
+
 
 const controller={
     async login(req,res,next){
@@ -18,16 +23,15 @@ const controller={
             const {emailID,password}=req.body
             const user=await User.findOne({emailID});
             if(user){
-                console.log("User");
                 const isCompare=await bcrypt.compare(password,user.password)
                 if(isCompare){
                     try{
-                        console.log("Pass match")
                         const token=await createToken(user._id)
                         res.cookie("jwt",token,{
                             maxAge:1000*60*60*24*2
                         })
-                        res.send(token)
+                        res.json(user);
+                        // res.send(token)
                     }catch{
                         res.status(404).json({message:"Problem to create tokens"})
                         return;
@@ -70,6 +74,19 @@ const controller={
         }catch(err){
             res.status(500).send(err);
         }
+    },
+    async getProfile(req,res,next){
+        const token=req.cookies.jwt
+
+        jwt.verify(token,process.env.SECRET_KEY,async (err,info)=>{
+            if(err){
+                return res.status(401).json({ message: "Not authorized" })
+            }
+            const profileinfo= await User.findById(info.id)
+            const str=JSON.stringify(profileinfo)
+            const getprofile=JSON.parse(str);
+            res.json(getprofile);
+        })
     }
 };
 
