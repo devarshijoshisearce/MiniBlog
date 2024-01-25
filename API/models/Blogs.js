@@ -17,6 +17,10 @@ const BlogSchema = new mongoose.Schema(
             type : String,
             required : [true, "title is needed"]
         },
+        summary : {
+            type : String, 
+            required : [true, "Summary is needed"]
+        },
         content : {
             type : String,
             required : [true, "Content is needed"]
