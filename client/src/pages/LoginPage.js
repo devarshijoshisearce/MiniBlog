@@ -10,7 +10,7 @@ export default function LoginPage() {
     const {setUserInfo} = useContext(UserContext);
     async function login(ev) {
         ev.preventDefault();
-        const response = await fetch('http://localhost:4000/login', {
+        const response = await fetch('http://localhost:3000/auth/login', {
           method: 'POST',
           body: JSON.stringify({emailID, password}),
           headers: {'Content-Type':'application/json'},
@@ -20,13 +20,15 @@ export default function LoginPage() {
           response.json().then(userInfo => {
             //from JSON (backend)
             setUserInfo(userInfo);
+            console.log(userInfo);
             console.log("Login credentials ok.");
             nav("/");
             // setRedirect(true);
           });
         } else {
-            console.log("Login credentials ok.");
-            nav("/");
+            console.log("Login credentials not ok.");
+            alert("Login failed");
+            nav("/login");
         }
       }
     // async function login(ev){
