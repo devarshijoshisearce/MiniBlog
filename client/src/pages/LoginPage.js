@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate} from 'react-router-dom';
+import { UserContext } from '../UserContext';
 
 export default function LoginPage() {
+    // const [email,setemail] = useState('');
     const [emailID, setemailID] = useState('');
     const [password, setPassword] = useState('');
     const nav=useNavigate();
@@ -10,7 +12,7 @@ export default function LoginPage() {
         ev.preventDefault();
         const response = await fetch('http://localhost:4000/login', {
           method: 'POST',
-          body: JSON.stringify({username, password}),
+          body: JSON.stringify({emailID, password}),
           headers: {'Content-Type':'application/json'},
         //   credentials: 'include',
         });
