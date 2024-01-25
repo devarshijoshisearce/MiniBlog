@@ -64,7 +64,6 @@ div.post p.summary{
 
 /* Form Styling */
 form.login, form.register{
-
   max-width: 400px;
   margin: 0 auto;
 }

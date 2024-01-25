@@ -1,18 +1,25 @@
+import { compareAsc, format } from "date-fns";
+import { Link } from "react-router-dom";
 
-export default function Post(){
+export default function Post({title,summary,cover,content,createdAt,author}){
     return(
         <div className="post">
-
+          
       <div className="image">
-        <img src="https://www.hindustantimes.com/ht-img/img/2023/08/25/550x309/international_dog_day_1692974397743_1692974414085.jpg" alt="Hello" />
+        <Link to={'/post/id'}>
+          <img src={'http://localhost:3000/auth/'+cover} alt="post image" />
+        </Link>
         </div>
         <div className="text">
-        <h2>Lorem ipsum dolor sit.</h2>
+        <Link to={'/post/id'}>
+          <h2>{title}</h2>
+        </Link>
         <p className="info">
-          <a className="author">Searce Inc</a>
-          <time>2024-16-01 12:00</time>
+          {/* need to add author in schema of post by reference from user (2:27:20) */}
+          <a className="author">{author}</a>
+          <time>{format(new Date(createdAt),"yyyy-MM-dd")}</time>
         </p>
-        <p className="summary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui odio eos facilis repudiandae consequuntur, in veniam ipsa? Incidunt beatae molestias enim non voluptatum, ullam, consequuntur eaque officia quo sint est.</p>
+        <p className="summary">{summary}</p>
         </div>
       </div>
     );
