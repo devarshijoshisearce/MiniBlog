@@ -31,7 +31,7 @@ const controller={
                             maxAge:1000*60*60*24*2
                         })
                         res.json(user);
-                        // res.send(token)
+                        // res.send(token);
                     }catch{
                         res.status(404).json({message:"Problem to create tokens"})
                         return;
