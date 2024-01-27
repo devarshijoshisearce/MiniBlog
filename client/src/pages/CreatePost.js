@@ -35,11 +35,11 @@ export default function CreatePost(){
       data.set('file',files[0]);
       ev.preventDefault();
       console.log(files);
-      const response = await fetch('http://localhost:3000/auth/post',{
+      const response = await fetch('http://localhost:3000/blog/createBlog',{
         method:'POST',
         body:data,
         // gotta add cookie(2:27:50)
-        credentials:'include',
+        // credentials:'include',
       });
       if(response.ok){
         setRedirect(true);
