@@ -28,6 +28,9 @@ app.use('/auth',authRouter)
 const blogRouter=require('./routers/Blogs')
 app.use('/blog',blogRouter)
 
+const commentRouter=require('./routers/Comments')
+app.use('/',commentRouter)
+
 
 //Connection to db
 const port=process.env.PORT ?? 2324
