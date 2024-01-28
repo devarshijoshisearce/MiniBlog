@@ -39,7 +39,7 @@ export default function CreatePost(){
         method:'POST',
         body:JSON.stringify({title,summary,content}), //sending as Form data as want file too
         // gotta add cookie(2:27:50)
-        // credentials:'include',
+        credentials:'include',
         headers: {'Content-Type':'application/json'},
       });
       console.log(await response.json());
