@@ -1,35 +1,37 @@
 const { write } = require("fs");
 const Blog = require("../models/Blogs");
+const jwt=require('jsonwebtoken')
 // const Temp = "65ae5a254f046fd681538ccc";
 const controller = {
   async createBlogs(req, res, next) {
     try {
-      const {
-        author,
-        authorID,
-        title,
-        summary,
-        content,
-        img,
-        upvotes,
-        downvotes,
-        timestamp,
-      } = req.body;
-
-      // Save the blog to the database
+      const token=req.cookies.jwt;
+      jwt.verify(token,process.env.SECRET_KEY,async (err,info)=>{
+        if(err){
+          return res.status(401).json({ message: "User not logged in" })
+        }
+        const {
+          author,
+          title,
+          summary,
+          content,
+          img,
+          upvotes,
+          downvotes,
+        } = req.body;
+        // Save the blog to the database
       const sendBlog = await Blog.create({
-        author,
-        authorID,
+        author: info.id,
         title,
         summary,
         content,
         img,
         upvotes,
         downvotes,
-        timestamp,
       });
+      
       res.status(201).send(sendBlog);
-    //   res.status(201).json({ message: "Blog created successfully" });
+      }) 
     } catch (error) {
       next(error); // Pass the error to the error-handling middleware
     }
@@ -39,8 +41,7 @@ const controller = {
   async viewBlogs(req, res, next) {
     try {
       // Retrieve all blogs from the database
-      const blogs = await Blog.find();  // true condition, so returns all values
-
+      const blogs = await Blog.find().populate('author',['username']);  // true condition, so returns all values
       res.status(200).json({ blogs });
     } catch (error) {
       next(error);

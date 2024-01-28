@@ -5,14 +5,7 @@ const CommentSchema = require("../models/Comments") //importing comment schema
 //author, title, content, img, upvotes, downvotes, timestamp
 const BlogSchema = new mongoose.Schema(
     {
-        author : {
-            type : String,
-            required : [true, "author is needed"]
-        },
-        authorID : {
-            type : String,
-            required : [true, "authorID  is needed"]
-        },
+        author : {type:mongoose.Schema.Types.ObjectId, ref:'Users'},
         title : {
             type : String,
             required : [true, "title is needed"]
@@ -36,10 +29,8 @@ const BlogSchema = new mongoose.Schema(
         downvotes : {
             type : Number
         },
-        timestamp : {
-            type : Date,
-            default : Date.now
-        }
+    },{
+        timestamps:true,
     }
 )
 
