@@ -47,8 +47,9 @@ export default function CreatePost(){
       //   console.log("Hello");
       //   // setRedirect(true);
       // }
-      if(response.status === 200){
-        alert("Post added Successful");
+      console.log(response.status)
+      if(response.status === 200 || response.status===201){
+        alert("Post added Successfully");
         nav("/");
     }else{
         alert("POST addition Failed");

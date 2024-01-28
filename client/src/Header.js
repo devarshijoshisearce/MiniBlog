@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import { UserContext } from './UserContext';
+import { useNavigate } from "react-router-dom";
 export default function Header(){
     // const {setUserInfo,userInfo} = useContext(UserContext);
     const {setUserInfo,userInfo} = useContext(UserContext);
-  
+    const nav = useNavigate();
     useEffect(()=>{
-      fetch('http://localhost:3000/auth/profile').then(response=>{
+      fetch('http://localhost:3000/auth/profile',{credentials: 'include'}).then(response=>{
           response.json().then(userInfo=>{
           // setUserInfo(userInfo);
           setUserInfo(userInfo);
@@ -19,8 +20,8 @@ export default function Header(){
       fetch('http://localhost:3000/auth/logout',{
         credentials: 'include',
       });
-      // setUserInfo(null);
       setUserInfo(null);
+      nav("/")
     }
     
     //userInfo can be null
