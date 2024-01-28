@@ -1,26 +1,27 @@
-import { compareAsc, format } from "date-fns";
-import { Link } from "react-router-dom";
+import {formatISO9075} from "date-fns";
+import {Link} from "react-router-dom";
 
-export default function Post({title,summary,cover,content,createdAt,author}){
-    return(
-        <div className="post">
-          
-      <div className="image">
-        <Link to={'/post/id'}>
-          <img src={'http://localhost:3000/auth/'+cover} alt="post image" />
-        </Link>
-        </div>
-        <div className="text">
-        <Link to={'/post/id'}>
-          <h2>{title}</h2>
-        </Link>
+export default function Post({_id,title,summary,cover,content,createdAt,author}) {
+  return (
+    <div className="post">
+      <div className="texts">
+        <h2>{title}</h2>
         <p className="info">
-          {/* need to add author in schema of post by reference from user (2:27:20) */}
-          <a className="author">{author}</a>
-          <time>{format(new Date(createdAt),"yyyy-MM-dd")}</time>
+          <a className="author">{author.username}</a>
+          <time>{formatISO9075(new Date(createdAt))}</time>
         </p>
         <p className="summary">{summary}</p>
-        </div>
       </div>
-    );
+    </div>
+  );
 }
+{/* <Link to={`/post/${_id}`}>
+</Link> */}
+
+// <div className="image">
+// <Link to={`/post/${_id}`}>
+//   {/* <img src={'http://localhost:4000/'+cover} alt=""/>
+//    */}
+//    HELLO
+// </Link>
+// </div>
