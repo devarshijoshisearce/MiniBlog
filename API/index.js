@@ -9,7 +9,7 @@ app.use(express.json())    //to accept json body
 app.use(cookieParser())
 // app.use(cors({credentials:true,origin:"http://localhost:3000"}))
 app.use(cors())
-
+// app.use(cors({credentials:true,origin:'http://localhost:3000'}));
 //Just for testing 
 app.get('/',(req,res)=>{
     res.send("This is home page")
