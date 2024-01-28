@@ -17,7 +17,7 @@ export default function Header(){
 
     function logout(){
       fetch('http://localhost:3000/auth/logout',{
-        credentials: 'include',
+        // credentials: 'include',
         method:'POST'
       });
       // setUserInfo(null);

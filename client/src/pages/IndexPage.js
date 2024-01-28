@@ -1,20 +1,30 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../Post";
 
-export default function IndexPage(){
-    const [posts, setPosts] = useState([]);
-    // get request from index.js in api folder
-    useEffect(()=>{
-        fetch('http://localhost:3000/auth/post')
-        .then(res=>res.json())
-        .then(data=>console.log(data))
-    },[]);
-    return (
-        <>
-           {posts.length>0 && posts.map(post=>(
-                <Post {...Post} />
-           ))}
-        </>
-    )
+export default function IndexPage() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/blog/viewBlogs');
+        const data = await response.json();
+        setPosts(data.blogs);
+        console.log(data); 
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+  return (
+    <>
+      {posts.length > 0 ? (
+        posts.map(post => <Post key={post.id} {...post} />)
+      ) : (
+        <h1>No posts available</h1>
+      )}
+    </>
+  );
 }
