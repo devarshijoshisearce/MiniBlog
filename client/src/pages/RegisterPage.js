@@ -2,6 +2,7 @@ import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 export default function RegisterPage() {
 
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [emailID, setemailID] = useState('');
@@ -9,8 +10,16 @@ export default function RegisterPage() {
     const [age, setAge ]= useState('');
     const nav=useNavigate()
     const [gender, setGender] = useState('');
+    function validateEmail(email) {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+      }
     async function register(ev){
         ev.preventDefault();
+        if (!validateEmail(emailID)) {
+            alert("Please enter a valid email address");
+            return;
+          }
          const response = await fetch('http://localhost:3000/auth/signup',{
             method: 'POST',
             body: JSON.stringify({username,password,emailID,name,age}),
@@ -23,46 +32,46 @@ export default function RegisterPage() {
         }else{
             alert("Registration Failed");
         }    
-
     }
+
+    
     return (
         <form className="register" onSubmit={register}>
             <h1>Register</h1>
-
             <input 
             type="text" 
             name="username" 
             placeholder="Username" 
             value={username} 
-            onChange={ev => setUsername(ev.target.value)}/>
+            onChange={ev => setUsername(ev.target.value)} required/>
 
             <input 
-            type="email" 
+            type="text" 
             name="emailID" 
             placeholder="emailID" 
             value={emailID}
-            onChange={ev => setemailID(ev.target.value)}/>
+            onChange={(ev) => setemailID(ev.target.value)} required/>
 
             <input 
             type="password" 
             name="password" 
             placeholder="Password" 
             value={password}
-            onChange={ev => setPassword(ev.target.value)}/>
+            onChange={ev => setPassword(ev.target.value)} required/>
 
             <input 
             type="text" 
             name="name" 
             placeholder="Name" 
             value={name}
-            onChange={ev => setName(ev.target.value)}/>
+            onChange={ev => setName(ev.target.value)} required/>
 
             <input 
             type="number" 
             name="age" 
             placeholder="Age" 
             value={age}
-            onChange={ev => setAge(ev.target.value)}/>
+            onChange={ev => setAge(ev.target.value)} required/>
 
             
             
