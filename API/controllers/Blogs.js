@@ -1,179 +1,140 @@
-const { write } = require("fs");
-const fs=require('fs')
+const fs = require('fs')                    //file system module for working with file systems
 const Blog = require("../models/Blogs");
-const jwt=require('jsonwebtoken') 
-const multer=require('multer');
+const jwt = require('jsonwebtoken')         //used to identify authenticated user
 
-// const Temp = "65ae5a254f046fd681538ccc";
+
 const controller = {
+
+  //for creation of Blogs
   async createBlogs(req, res, next) {
     try {
-      const {originalname,path}=req.file;
-      const parts=originalname.split('.')
-      const ext=parts[parts.length-1]
-      const newPath=path+'.'+ext
-      fs.renameSync(path,newPath)
-      console.log(path);
-      const token=req.cookies.jwt;
-      jwt.verify(token,process.env.SECRET_KEY,async (err,info)=>{
-        if(err){
+      const { originalname, path } = req.file;    //get the original name of file and also path
+      const parts = originalname.split('.')       //splitting file name to extract extension
+      const ext = parts[parts.length - 1]         //extracts the extension of image
+      const newPath = path + '.' + ext            //cretes new file path from original path
+      fs.renameSync(path, newPath)                //renames a file 
+
+      const token = req.cookies.jwt;
+      jwt.verify(token, process.env.SECRET_KEY, async (err, info) => {       //verifies whether user is authenticated or not
+        if (err) {
           return res.status(401).json({ message: "User not logged in" })
         }
-        const {
+        const {title,summary,content} = req.body;
+        // Save the blog to the database
+        const sendBlog = await Blog.create({
+          author: info.id,
           title,
           summary,
+          img: newPath,
           content
-        } = req.body;
-        // Save the blog to the database
-      const sendBlog = await Blog.create({
-        author: info.id,
-        title,
-        summary,
-        img:newPath,
-        content
-       
-      });
-      
-      res.status(201).send(sendBlog);
-      }) 
+        });
+
+        res.status(201).send(sendBlog);
+      })
     } catch (error) {
       next(error); // Pass the error to the error-handling middleware
     }
   },
 
-  //API to view all blogs
+  //To view all blogs
   async viewBlogs(req, res, next) {
     try {
       // Retrieve all blogs from the database
-      const blogs = await Blog.find().populate('author',['username']);  // true condition, so returns all values
+      const blogs = await Blog.find().populate('author', ['username']).sort({ createdAt: -1 });  // true condition, so returns all values
       res.status(200).json({ blogs });
     } catch (error) {
       next(error);
     }
   },
 
-  async updateBlog(req,res,next){
-    try{
-      let newPath=null
-      if(req.file){
-        const {originalname,path}=req.file;
-        const parts=originalname.split('.')
-        const ext=parts[parts.length-1]
-        newPath=path+'.'+ext
-        fs.renameSync(path,newPath)
+  //Updating single blog
+  async updateBlog(req, res, next) {
+    try {
+      let newPath = null
+      if (req.file) {
+        const { originalname, path } = req.file;
+        const parts = originalname.split('.')
+        const ext = parts[parts.length - 1]
+        newPath = path + '.' + ext
+        fs.renameSync(path, newPath)
       }
 
-      const token=req.cookies.jwt;
-      jwt.verify(token,process.env.SECRET_KEY,async (err,info)=>{
-        if(err){
+      const token = req.cookies.jwt;
+      jwt.verify(token, process.env.SECRET_KEY, async (err, info) => {        //verifies whether user is authenticated or not
+        if (err) {
           return res.status(401).json({ message: "User not logged in" })
         }
-        const {id,title,summary,content} = req.body;
-      const postDoc=await Blog.findById(id);
-      const sendBlogs=await postDoc.updateOne({
-        title,
-        summary,
-        img:newPath ? newPath:postDoc.img,
-        content
-      });    
-      res.status(201).json(sendBlogs);
-      }) 
-    }catch(error){
+        const { id, title, summary, content } = req.body;
+        const postDoc = await Blog.findById(id);            //find the blog to be updated using id
+        const sendBlogs = await postDoc.updateOne({         //update the blog 
+          title,
+          summary,
+          img: newPath ? newPath : postDoc.img,             //if new path exists: assign its value to img
+          content
+        });
+        res.status(201).json(sendBlogs);
+      })
+    } catch (error) {
       next(error)
     }
   },
-  
+
   // API to view a specific blog
-  async viewBlogsbyID(req, res, next){
-    try{
-        // console.log("Temp is ", Temp);
-        id = req.params.id
-        const blogs = await Blog.findById(id).populate('author',['username']);   // search the blog ID
-        res.status(201).send(blogs);
-    } catch (error){
-        next(error);
-    }
-  },
-
-  // API to search blogs by author name -> not that useful
-  async viewBlogsbyAuthor(req, res, next)
-  {
-    try{
-        writer = req.params.writer
-        const blogs = await Blog.find({author : writer}) // search where author = name given
-        res.status(201).send(blogs);
-    } catch(error)
-    {
-        next(error);
-    }
-  },
-
-  // API to search blogs by specific author ID
-  async viewBlogsbyAuthorID(req, res, next)
-  {
-    try{
-        writerID = req.params.writerid
-        const blogs = await Blog.find({authorID : writerID})    // search where authorID = ID given
-        res.status(201).send(blogs);
-    } catch(error)
-    {
-        next(error);
+  async viewBlogsbyID(req, res, next) {
+    try {
+      id = req.params.id
+      const blogs = await Blog.findById(id).populate('author', ['username']);   // view the specific blog by using blog ID
+      res.status(201).send(blogs);
+    } catch (error) {
+      next(error);
     }
   },
 
   // API to delete a blog by its ID
-  async deleteBlogsbyID(req, res, next)
-  {
-    try{
+  async deleteBlogsbyID(req, res, next) {
+    try {
       const postID = req.params.id;
       await Blog.findByIdAndDelete(postID)      //find the specific post and delete it from the database
-      res.status(201).json({message:"Post deleted successfuly"});
-  }catch(error)
-  {
+      res.status(201).json({ message: "Post deleted successfuly" });
+    } catch (error) {
       next(error);
-  }
-  },
-
-  async updateBlogsbyID(req, res, next)
-  {
-    try{
-      const {postID, 
-        userID,
-        author,
-        authorID,
-        title,
-        content,
-        img,
-        upvotes,
-        downvotes,
-        timestamp,} = req.body;
-
-        
-
-        if (authorID == userID)     //verify that the user is the author
-        {
-            // const blogs = await Blog.findByIdAndDelete(postID)      //find the specific post and delete it from the database
-            const sendBlog = {
-              author : author, 
-              title : title, 
-              content : content, 
-              img : img, 
-              upvotes : upvotes, 
-              downvotes : downvotes, 
-              timestamp : timestamp
-            }
-            const blogs = await Blog.findByIdAndUpdate(postID, sendBlog)
-            res.status(201).send(sendBlog);
-        }
-        else
-        {
-            res.status(400).send("User is not authorized to update this post")
-        }
-    }catch (error) {
-      next(error); // Pass the error to the error-handling middleware
     }
   }
 
 };
 
 module.exports = controller;
+
+
+
+
+
+
+
+
+
+
+
+//Controllers for filtering data
+
+// API to search blogs by author name -> not that useful
+// async viewBlogsbyAuthor(req, res, next) {
+//   try {
+//     writer = req.params.writer
+//     const blogs = await Blog.find({ author: writer }) // search where author = name given
+//     res.status(201).send(blogs);
+//   } catch (error) {
+//     next(error);
+//   }
+// },
+
+// // API to search blogs by specific author ID
+// async viewBlogsbyAuthorID(req, res, next) {
+//   try {
+//     writerID = req.params.writerid
+//     const blogs = await Blog.find({ authorID: writerID })    // search where authorID = ID given
+//     res.status(201).send(blogs);
+//   } catch (error) {
+//     next(error);
+//   }
+// },
