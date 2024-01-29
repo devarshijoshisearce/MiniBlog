@@ -125,20 +125,13 @@ const controller = {
   async deleteBlogsbyID(req, res, next)
   {
     try{
-        const { postID, AuthorID, userID } = req.body;
-        if (AuthorID == userID)     //verify that the user is the author
-        {
-            const blogs = await Blog.findByIdAndDelete(postID)      //find the specific post and delete it from the database
-            res.status(201).send(blogs);
-        }
-        else
-        {
-            res.status(400).send("User is not authorized to delete this post")
-        }
-    }catch(error)
-    {
-        next(error);
-    }
+      const postID = req.params.id;
+      await Blog.findByIdAndDelete(postID)      //find the specific post and delete it from the database
+      res.status(201).json({message:"Post deleted successfuly"});
+  }catch(error)
+  {
+      next(error);
+  }
   },
 
   async updateBlogsbyID(req, res, next)

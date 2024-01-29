@@ -33,7 +33,9 @@ nav a {
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
-
+a{
+  cursor: pointer;
+}
 nav a:hover {
   background-color: #f0f0f0;
 }
@@ -155,16 +157,15 @@ form h1 {
   text-align: center;
 }
 
-div.post-page div.image {
-  max-height: 300px;
-  display: flex;
-  overflow: hidden;
+div.post-page div.image{
+    max-height:400px;
+    display: flex;
+    overflow:hidden;
 }
-
-div.post-page div.image img {
-  object-fit: cover;
-  object-position: center center;
-  width: 100%;
+div.post-page div.image img{
+    object-fit: cover;
+    object-position: center center;
+    width: 100%;
 }
 
 div.post-page a {

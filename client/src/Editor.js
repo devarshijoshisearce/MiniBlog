@@ -11,7 +11,7 @@ export default function Editor({value,onChange}) {
         { indent: '-1' },
         { indent: '+1' },
       ],
-      ['link', 'image'],
+      ['link'],
       ['clean'],
     ],
   };

@@ -11,7 +11,7 @@ router.get('/viewBlogs',controller.viewBlogs);                              //re
 router.get('/viewBlogsbyID/:id',controller.viewBlogsbyID);                  //retrieve a specific post. Search by postID
 router.get('/viewBlogsbyAuthor/:writer',controller.viewBlogsbyAuthor);      //retrieve all posts by user name -> search function
 router.get('/viewBlogsbyAuthorID/:writerid',controller.viewBlogsbyAuthorID);//retrieve all post by a specific user -> user page
-router.put('/deleteBlogsbyID/',controller.deleteBlogsbyID);                 //delete a specific post -> pass postID, authorID, userID as params similar to how data was passed in creating a blog
+router.delete('/deleteBlogsbyID/:id',controller.deleteBlogsbyID);                 //delete a specific post -> pass postID, authorID, userID as params similar to how data was passed in creating a blog
 router.post('/updateBlogbyID',uploadMiddleWare.single('file'), controller.updateBlogsbyID)                      //update a post -> pass postID, authorID, userID, and the same data as createBLogs.
 router.put('/updateBlog',uploadMiddleWare.single('file'),controller.updateBlog)
 
