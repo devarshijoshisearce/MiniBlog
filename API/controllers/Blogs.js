@@ -94,7 +94,8 @@ const controller = {
   async deleteBlogsbyID(req, res, next) {
     try {
       const postID = req.params.id;
-      await Blog.findByIdAndDelete(postID)      //find the specific post and delete it from the database
+      const b  = await Blog.findByIdAndDelete(postID)      //find the specific post and delete it from the database
+      fs.unlinkSync(b.img)
       res.status(201).json({ message: "Post deleted successfuly" });
     } catch (error) {
       next(error);
