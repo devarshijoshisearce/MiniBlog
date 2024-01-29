@@ -20,8 +20,8 @@ const BlogSchema = new mongoose.Schema(
         },
         // Tuple of images. can be retrieved one at a time
         img : {
-            data : Buffer,
-            contentType : String
+            type : String,
+            required : [true, "Image is needed"]
         },
         upvotes : {
             type : Number
