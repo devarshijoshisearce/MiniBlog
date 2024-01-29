@@ -235,3 +235,8 @@ label {
 button {
   margin-top: 20px;
 }
+
+/* styling of logo */
+.logoimg{
+  width: 150px;
+}
