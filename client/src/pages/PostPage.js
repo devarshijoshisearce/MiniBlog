@@ -49,14 +49,14 @@ export default function PostPage() {
           </Link>
         </div>
       )}
-      <div className="image">
-        Image here
-      </div>
       {/* <div className="image">
-        <img src={`http://localhost:3000/${postInfo.cover}`} alt=""/>
+        Image here
       </div> */}
-      {/* <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} />
-       */}
+      <div className="image">
+        <img src={`http://localhost:3000/${postInfo.cover}`} alt=""/>
+      </div> 
+      {/* {/* <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} /> */}
+      
 
 <div className="content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(postInfo.content) }} />
     </div>

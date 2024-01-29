@@ -23,7 +23,7 @@ export default function CreatePost(){
     const [title,setTitle] = useState('');
     const [summary,setSummary] = useState('');
     const [content, setContent] = useState('');
-    // const [files, setFile] = useState('');
+    const [files, setFile] = useState('');
     // const [redirect, setRedirect] = useState(false);
     const nav = useNavigate();
     async function createNewPost(ev){
@@ -31,18 +31,18 @@ export default function CreatePost(){
       data.set('title',title);
       data.set('summary',summary);
       data.set('content',content);
-      // data.set('file',files[0]); //send only first file
+      data.set('file',files[0]); //send only first file
       ev.preventDefault();
-      // console.log(files);
-      console.log({title,summary,content});
+      console.log(data.get('file').name);
+      // console.log({title,summary,content});
       
       const response = await fetch('http://localhost:3000/blog/createBlog',{
         method:'POST',
-        body:JSON.stringify({title,summary,content}), //sending as Form data as want file too
-        // gotta add cookie(2:27:50)
+        // body:JSON.stringify({title,summary,content}), //sending as Form data as want file too
+        body:data,
         credentials:'include',
-        headers: {'Content-Type':'application/json'},
       });
+      console.log(data)
       console.log(await response.json());
       // if(response.ok){
       //   console.log("Hello");
@@ -72,14 +72,14 @@ export default function CreatePost(){
             placeholder={"Summary"}
             value={summary}
             onChange={ev=> setSummary(ev.target.value)}/>
-            {/* <input type="file" 
-            onChange={ev=>setFile(ev.target.files)}/> */}
+            <input type="file" 
+            onChange={ev=>setFile(ev.target.files)}/> 
             {/* <ReactQuill value={content} 
             onChange={newValue=> setContent(newValue)} 
             modules={modules} 
             formats={formats}/> */}
            
-            <Editor onChange={setContent} value={content} />
+            <Editor onChange={setContent} value={content} /> 
 {/* 
 <input type="summary" 
             placeholder={"Content"}
