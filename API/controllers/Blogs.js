@@ -12,13 +12,10 @@ const controller = {
           return res.status(401).json({ message: "User not logged in" })
         }
         const {
-          author,
           title,
           summary,
           content,
-          img,
-          upvotes,
-          downvotes,
+          img
         } = req.body;
         // Save the blog to the database
       const sendBlog = await Blog.create({
@@ -26,9 +23,7 @@ const controller = {
         title,
         summary,
         content,
-        img,
-        upvotes,
-        downvotes,
+        // img
       });
       
       res.status(201).send(sendBlog);
