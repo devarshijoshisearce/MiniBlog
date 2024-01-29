@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "miniblog-412705",
+  "private_key_id": "cd9f0ef14e9928d5b3fca4010ebbacc9dc60e5ee",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC2gzyN13huASh7\nIHa0RcG3qz8hLMU758WgYkOoNwp5Lc51t7frIINDg11i8lurLN/VphkRhOYgbjJg\n5gMSq6qtHlSBhcsbniCQCOO0kLe4SHQTmoDzv0eAYITxm0pA6TQjcJ8PACTwKc/0\n7qRI7CqxIqur9zptl6TLKK53WZ4RWMiPGH7dWphbyCVDEPeVTG99godtIh0iqtAX\n2J6fc7CYM1tD1sPJbVcVEPjmTf96Fpk5S2TVkFAnFVzvJjkfvdBybEzb4ABBbnUa\nQzpMwvr6IsfS0vUwXGGQt9kJAfB93fQFQosb8+r8bjbPpkNaWClAjMOja1mfVM/5\nZOxicBvbAgMBAAECggEALg8iif01lDVQnPoNWuM7xvk9fkbJI5wTIK2Lu3jgeMJZ\nlxWdIYZb+f6944mcHq+9cTJwox4x4T9OEWwanGycLwI3e1RjdH3MY+0KYfgflS8b\ntBLKtjiwd7Jj+oEhFQ6FLOhwC54StFUo+Pv8k7ad84P3ZPeIVD3vxaFnnhEMtf2P\nP377viPkfryCstMdbgJvNrrKT1VF250yWJ4YfSHDQmb4ZvJ2pFnOqnVIaBNd38bp\nRc6hBPQo/5KXLlqNygwD12Be1pPBQ7b+hsYjMYgr1GP/9dlKbKFk7hvR5nhBE+el\nXYFOlUtKqhfpR6icwZKSVEb3vamQSM4VjPyBjZ1uKQKBgQDvHsCDIH4ptUM2X6sh\nJN9+t2aUsMuVawFo0AL2ET853DCcoy0Cj7l51PtzspPKzMGxEKm6E6bOpwiP0ZdT\n1wN4sbZHOniJUnTObGne8qIXOspB93hVYiY/G52ShY9IN2Tmj5Bv8LMcpAqxwvJL\n4wuFW9fPgWvPCWZ/Ashw16oJxQKBgQDDZYFOs3C1AZxMjzKBvQ/hQwVpKQjy2KlD\nxpD2gISbE1ZU+OCl7JDh57+prfMbEsQap3bjDzmL2BFHQffGtGJlMpVjzYozcI7I\niMh4YSZs5PIkZ/kPATdVT+1PYNHnaO6zcxW9g6ss5dqbJOnDhF+qNgLbY2fqBVMP\njMCh1Y0JHwKBgQCR7Ud4/oxf8bHJ7gpmmLUYBN7CYT5sujfK+h7EgnP+YIT+Iorm\nZEXBtxuZWOLewaR25X9fAn0q4j7UXgkm7jG9J17hCyriSwLjsr/Ngm8vE/640UiL\nevFyU+0OrRlq7ftSxUxVNCRqlyW7pAfwDehLA2ipxwa++7KkUlN2ofawLQKBgEyK\nToTNtbCx2NAEp/w6WyYaYtw2vtKiHGv4NIDbBxbYFFFkzFsyt+5GIcYN5dUNHNR0\nFRYMuLYXBW2sYarsrj6F+g8GTMSpqsTTD/RX2f1+EXxBXkaKa2p3zLXzb0X+zMJu\nqm16Tmtf/qoXY5q7F95NGgFmhyYcv9SvhiXeyUhxAoGBANCoMDmkMwlVEVg4T8JF\nrIXY38r4uTXqdl0AbDOLMD2YOd1pBlrNifnJ7lKHGgruugqC7RjKZ5GQmUta78Jw\n+qedbrKxrHSZ8G8CYa4QtqPnZjyV5ToB4DFkXTR3rPYxP/EKKh/XIWy8ooIJGris\n4cgAyNGvBdPr82Jrzy/nCXDf\n-----END PRIVATE KEY-----\n",
+  "client_email": "miniblog-data-retrieval@miniblog-412705.iam.gserviceaccount.com",
+  "client_id": "103900326006470292251",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/miniblog-data-retrieval%40miniblog-412705.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
