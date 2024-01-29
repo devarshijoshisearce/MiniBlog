@@ -1,11 +1,19 @@
 const { write } = require("fs");
+const fs=require('fs')
 const Blog = require("../models/Blogs");
 const jwt=require('jsonwebtoken') 
+const multer=require('multer');
 
 // const Temp = "65ae5a254f046fd681538ccc";
 const controller = {
   async createBlogs(req, res, next) {
     try {
+      const {originalname,path}=req.file;
+      const parts=originalname.split('.')
+      const ext=parts[parts.length-1]
+      const newPath=path+'.'+ext
+      fs.renameSync(path,newPath)
+      console.log(path);
       const token=req.cookies.jwt;
       jwt.verify(token,process.env.SECRET_KEY,async (err,info)=>{
         if(err){
@@ -14,16 +22,16 @@ const controller = {
         const {
           title,
           summary,
-          content,
-          img
+          content
         } = req.body;
         // Save the blog to the database
       const sendBlog = await Blog.create({
         author: info.id,
         title,
         summary,
-        content,
-        // img
+        img:newPath,
+        content
+       
       });
       
       res.status(201).send(sendBlog);
@@ -41,6 +49,37 @@ const controller = {
       res.status(200).json({ blogs });
     } catch (error) {
       next(error);
+    }
+  },
+
+  async updateBlog(req,res,next){
+    try{
+      let newPath=null
+      if(req.file){
+        const {originalname,path}=req.file;
+        const parts=originalname.split('.')
+        const ext=parts[parts.length-1]
+        newPath=path+'.'+ext
+        fs.renameSync(path,newPath)
+      }
+
+      const token=req.cookies.jwt;
+      jwt.verify(token,process.env.SECRET_KEY,async (err,info)=>{
+        if(err){
+          return res.status(401).json({ message: "User not logged in" })
+        }
+        const {id,title,summary,content} = req.body;
+      const postDoc=await Blog.findById(id);
+      const sendBlogs=await postDoc.updateOne({
+        title,
+        summary,
+        img:newPath ? newPath:postDoc.img,
+        content
+      });    
+      res.status(201).json(sendBlogs);
+      }) 
+    }catch(error){
+      next(error)
     }
   },
   
