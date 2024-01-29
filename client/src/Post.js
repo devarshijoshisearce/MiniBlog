@@ -5,9 +5,9 @@ export default function Post({_id,title,summary,img,content,createdAt,author}) {
   console.log(img)
   return (
     <div className="post">
-      <div className="image">
+      <div className="image" >
       <Link to={`/blog/${_id}`}>
-          <img src={`http://localhost:3000/${img}`} alt="hello"/>
+          <center><img src={`http://localhost:3000/${img}`} alt="hello"/></center>
       </Link>
       </div>
       <div className="texts">
