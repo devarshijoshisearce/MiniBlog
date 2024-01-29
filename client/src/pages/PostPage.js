@@ -46,10 +46,12 @@ export default function PostPage() {
     
             if (response.ok) {
               // If deletion is successful, show success message and navigate to homepage
-              Swal.fire(
-                'Deleted!',
-                'Your post has been deleted.',
-                'success'
+              Swal.fire({
+                title: 'Deleted!',
+                text:'Your post has been deleted.',
+                icon:'success',
+                confirmButtonColor: '#79ac78',
+            }
               );
               nav('/');
             } else {
@@ -97,7 +99,6 @@ export default function PostPage() {
       <div className="image-post">
         <img src={`http://localhost:3000/${postInfo.img}`} alt=""/>
       </div> 
-      {/* {/* <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} /> */}
 <div className="content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(postInfo.content) }} />
     </div>
   );
