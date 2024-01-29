@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Navigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Editor from "../Editor";
 
 export default function EditPost() {
@@ -7,21 +7,23 @@ export default function EditPost() {
   const [title,setTitle] = useState('');
   const [summary,setSummary] = useState('');
   const [content,setContent] = useState('');
+  const nav = useNavigate();
 //   const [files, setFiles] = useState('');
-  const [redirect,setRedirect] = useState(false);
+//   const [redirect,setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3000/blog/'+id)
+    fetch(`http://localhost:3000/blog/viewBlogsbyID/${id}`)
       .then(response => {
         response.json().then(postInfo => {
           setTitle(postInfo.title);
           setContent(postInfo.content);
           setSummary(postInfo.summary);
+        //   console.log(response);
         });
-        // console.log(postInfo);
+        console.log(response);
       });
-    
-  }, []);
+  }, [id]);
+        // console.log(postInfo);
 
   async function updatePost(ev) {
     ev.preventDefault();
@@ -33,20 +35,16 @@ export default function EditPost() {
     // if (files?.[0]) {
     //   data.set('file', files?.[0]);
     // }
-    const response = await fetch('http://localhost:3000/blog', {
+    const response = await fetch(`http://localhost:3000/blog/createBlogs/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(title,content,summary),
+      body: JSON.stringify(title,summary,content),
       credentials: 'include',
     });
+    console.log(response);
     if (response.ok) {
-      setRedirect(true);
+        nav('/blog/viewBlogsbyID'+id);
     }
   }
-
-  if (redirect) {
-    return <Navigate to={'/post/'+id} />
-  }
-
   return (
     <form onSubmit={updatePost}>
       <input type="title"
