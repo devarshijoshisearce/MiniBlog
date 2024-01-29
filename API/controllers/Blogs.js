@@ -23,9 +23,7 @@ const controller = {
         title,
         summary,
         content,
-        img,
-        upvotes,
-        downvotes,
+        // img
       });
       
       res.status(201).send(sendBlog);
