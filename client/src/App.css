@@ -165,3 +165,27 @@ div.post-page a.edit-btn{
 a svg{
   height:20px;
 }
+
+/* styling for reg page */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.required {
+  color: red;
+  margin-left: 5px;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 20px;
+}
