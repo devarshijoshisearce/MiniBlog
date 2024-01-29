@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import { UserContext } from '../UserContext';
+import Swal from "sweetalert2";
 
 export default function LoginPage() {
     // const [email,setemail] = useState('');
@@ -22,12 +23,26 @@ export default function LoginPage() {
             setUserInfo(userInfo);
             console.log(userInfo);
             console.log("Login credentials ok.");
+            Swal.fire({
+              icon: 'success', // 'success' | 'error' | 'warning' | 'info' | 'question'
+              title: 'Registration Successful',
+              text: 'You will be redirected to Home Page!',
+              showConfirmButton: false,
+              timer: 500 // Auto close timer in milliseconds (2 seconds in this example)
+          })
             nav("/");
             // setRedirect(true);
           });
         } else {
             console.log("Login credentials not ok.");
-            alert("Login failed");
+            Swal.fire({
+              icon: 'error', // 'success' | 'error' | 'warning' | 'info' | 'question'
+              title: 'Registration Failed',
+              text: 'Please enter correct Credentials!',
+              showConfirmButton: false,
+              timer: 2000 // Auto close timer in milliseconds (2 seconds in this example)
+          })
+            // alert("Login failed");
             nav("/login");
         }
       }
