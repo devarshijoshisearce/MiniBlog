@@ -104,7 +104,7 @@ export default function PostPage() {
         </div>
         </>
       )}
-      <div className="image">
+      <div className="image-post">
         <img src={`http://localhost:3000/${postInfo.img}`} alt=""/>
       </div> 
       {/* {/* <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} /> */}

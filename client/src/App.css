@@ -75,10 +75,9 @@ p {
   }
 }
 
-/* Additional Styles */
+/* Additional Styles in post.js*/
 img {
   max-width: 100%;
-  max-height: 300px;
 
 }
 
@@ -166,7 +165,6 @@ form h1 {
 }
 
 div.post-page div.image{
-    max-height:400px;
     display: flex;
     overflow:hidden;
 }
@@ -270,10 +268,9 @@ a{
 body{
     color: #222;
 }
-img{
+.post img{
     max-width: 100%;
     max-height: 300px;
-
 }
 main{
     padding: 10px;
@@ -508,4 +505,36 @@ img {
   width: 100%; 
   height: auto; 
 }
+
+div.image-post {
+  width: 100%;
+}
+
+div.image-post img {
+  max-width: 100%; 
+  max-height: 500px;  
+  object-fit: contain; /* Ensure image covers the entire container while maintaining aspect ratio */
+}
+
+/*password strength styling*/
+.password-strength {
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+
+.password-strength.weak {
+  color: red;
+}
+
+.password-strength.strong {
+  color: green;
+}
+
+
+
+
+
+
+
+
 
