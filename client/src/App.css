@@ -15,6 +15,9 @@ main{
   margin: 0 auto;
 
 }
+a{
+  cursor: pointer;
+}
 header{
   display: flex;
   justify-content: space-between;
@@ -147,7 +150,7 @@ div.post-page div.author{
   font-size: .7rem;
   font-weight: bold;
 }
-div.edit-row{
+div.edit-row div.delete-row{
   text-align: center;
   margin-bottom: 20px;
 }
@@ -160,6 +163,21 @@ div.post-page a.edit-btn{
   padding:15px 30px;
   border-radius: 5px;
   text-decoration: none;
+}
+div.post-page a.delete-btn{
+  background-color: #333;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  padding:15px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.row{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 /* for svg */
 a svg{
