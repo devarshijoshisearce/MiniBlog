@@ -1,55 +1,64 @@
 import { useContext, useEffect, useState } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from './UserContext';
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
+export default function Header() {
+  const { setUserInfo, userInfo } = useContext(UserContext);
+  const nav = useNavigate();
 
-export default function Header(){
-    // const {setUserInfo,userInfo} = useContext(UserContext);
-    const {setUserInfo,userInfo} = useContext(UserContext);
-    const nav = useNavigate();
-    useEffect(()=>{
-      fetch('http://localhost:3000/auth/profile',{credentials: 'include'}).then(response=>{
-          response.json().then(userInfo=>{
-          // setUserInfo(userInfo);
-          setUserInfo(userInfo);
-          console.log(userInfo);
-          });
+  useEffect(() => {
+    fetch('http://localhost:3000/auth/profile', { credentials: 'include' }).then(response => {
+      response.json().then(userInfo => {
+        setUserInfo(userInfo);
+        console.log(userInfo);
       });
-    },[]);
+    });
+  }, []);
 
-    function logout(){
-      fetch('http://localhost:3000/auth/logout',{
-        credentials: 'include',
-      });
-      setUserInfo(null);
-      nav("/")
-    }
-    
-    //userInfo can be null
-    const username = userInfo?.username;
-    return (
-        <header>
-        <Link to="/" className="logo">
-          <img src="./MiniBlog-Logo.png" className='logoimg'/>
-        </Link>
-        <nav>
-          {/* if we have username then next */}
-          {username && (
+  function logout() {
+    Swal.fire({
+      title: 'Are you trying to logout?',
+      text: 'Your session will end here.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#618264',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch('http://localhost:3000/auth/logout', {
+          credentials: 'include',
+        });
+        setUserInfo(null);
+        nav("/");
+      }
+    });
+  }
+
+  const username = userInfo?.username;
+
+  return (
+    <header>
+      <Link to="/" className="logo">
+        <img src="./MiniBlog-Logo.png" className='logoimg' alt="MiniBlog Logo" />
+      </Link>
+      <nav>
+        {username ? (
           <>
-          <p><b> Welcome {username} </b></p>
-          <Link to="/create" > Create new Post </Link>
-          <a onClick={logout}> Logout</a>
+            <p><b>Welcome {username}</b></p>
+            <Link to="/create">Create new Post</Link>
+            <a onClick={logout}>Logout</a>
           </>
-          )}
-          {!username && (
-            <>
-            <p><b> Welcome to MiniBlog </b></p>
+        ) : (
+          <>
+            <p><b>Welcome to MiniBlog</b></p>
             <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
-            </>
-          )}
-        </nav>
-      </header>
-    );
+          </>
+        )}
+      </nav>
+    </header>
+  );
 }

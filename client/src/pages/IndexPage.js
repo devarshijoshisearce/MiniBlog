@@ -11,14 +11,12 @@ export default function IndexPage() {
         const response = await fetch('http://localhost:3000/blog/viewBlogs');
         const data = await response.json();
         setPosts(data.blogs);
-        console.log(data);
         setHasData(data.blogs.length > 0); // Set hasData based on the received data
       } catch (error) {
         console.error("Error fetching posts:", error);
         setHasData(false); // Set hasData to false in case of an error
       }
     };
-
     fetchPosts();
   }, []);
 

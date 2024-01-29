@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import {Link,useParams,useNavigate} from "react-router-dom";
-import {formatISO9075} from "date-fns";
+import {format} from "date-fns";
 import {UserContext} from "../UserContext";
 import DOMPurify from 'dompurify';
 import Swal from 'sweetalert2';
@@ -18,10 +18,6 @@ export default function PostPage() {
             }
             const postInfo = await response.json();
             setPostInfo(postInfo);
-            // console.log(postInfo.img);
-            // console.log(postInfo.author._id);
-            // console.log(userInfo._id);
-    
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -32,19 +28,17 @@ export default function PostPage() {
     }, [id, userInfo]);
     
     const handleDeleteClick = async () => {
-        // Show SweetAlert2 confirmation dialog
         const result = await Swal.fire({
           title: 'Are you sure?',
           text: 'You won\'t be able to revert this!',
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
+          confirmButtonColor: '#79ac78',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Yes, delete it!'
         });
     
         if (result.isConfirmed) {
-          // If user clicks Yes, delete the post
           try {
             const response = await fetch(`http://localhost:3000/blog/deleteBlogsbyID/${id}`, {
               method: 'DELETE',
@@ -52,10 +46,12 @@ export default function PostPage() {
     
             if (response.ok) {
               // If deletion is successful, show success message and navigate to homepage
-              Swal.fire(
-                'Deleted!',
-                'Your post has been deleted.',
-                'success'
+              Swal.fire({
+                title: 'Deleted!',
+                text:'Your post has been deleted.',
+                icon:'success',
+                confirmButtonColor: '#79ac78',
+            }
               );
               nav('/');
             } else {
@@ -65,23 +61,19 @@ export default function PostPage() {
                 'Failed to delete the post. Please try again.',
                 'error'
               );
-            }
-    
+              }
           } catch (error) {
             console.error('Error deleting post:', error);
           }
         }
       };
-
   if (!postInfo || !userInfo) return '';
-
   return (
-    
     <div className="post-page">
       <h1>{postInfo.title}</h1>
-      <time>{formatISO9075(new Date(postInfo.createdAt))}</time>
-      <div className="author">by @{postInfo.author.username}</div>
       
+      <time>{format(new Date(postInfo.updatedAt),"MMMM dd, yyyy h:mm a")}</time>
+      <div className="author">by @{postInfo.author.username}</div>
       {userInfo._id === postInfo.author._id && (
         <>
         <div className="row">
@@ -95,19 +87,18 @@ export default function PostPage() {
         </div>
             <div className="delete-row">
         <button className="delete-btn" onClick={handleDeleteClick}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6V4a1 1 0 011-1h6a1 1 0 011 1v2m4 0V4a1 1 0 011-1h6a1 1 0 011 1v2m-3 3v10a2 2 0 01-2 2H8a2 2 0 01-2-2V9m4 0h4"/>
-          </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 6V4a1 1 0 011-1h6a1 1 0 011 1v2m4 0V4a1 1 0 011-1h6a1 1 0 011 1v2m-3 3v10a2 2 0 01-2 2H8a2 2 0 01-2-2V9m4 0h4"/>
+</svg>
           Delete this post
         </button>
         </div>
         </div>
         </>
       )}
-      <div className="image">
+      <div className="image-post">
         <img src={`http://localhost:3000/${postInfo.img}`} alt=""/>
       </div> 
-      {/* {/* <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} /> */}
 <div className="content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(postInfo.content) }} />
     </div>
   );

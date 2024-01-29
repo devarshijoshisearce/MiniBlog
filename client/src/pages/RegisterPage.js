@@ -143,7 +143,7 @@ export default function RegisterPage() {
                 {emailError && <p className="error">{emailError}</p>}
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
                 <label htmlFor="password">Password<span className="required">*</span></label>
                 <input
                     type="password"
@@ -157,7 +157,27 @@ export default function RegisterPage() {
                 {touchedFields.password && password && <p>Password Strength: {passwordStrength}</p>}
                 {touchedFields.password && !password && <p className="error">Password is mandatory</p>}
 
+            </div> */}
+
+            <div className="form-group">
+                <label htmlFor="password">Password<span className="required">*</span></label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={ev => setPassword(ev.target.value)}
+                    onBlur={() => handleFieldBlur('password')}
+                    required
+                />
+                {touchedFields.password && password && (
+                    <p className={`password-strength ${passwordStrength === 'Weak' ? 'weak' : 'strong'}`}>
+                        Password Strength: {passwordStrength}
+                    </p>
+                )}
+                {touchedFields.password && !password && <p className="error">Password is mandatory</p>}
             </div>
+
 
             <div className="form-group">
                 <label htmlFor="name">Name<span className="required">*</span></label>
