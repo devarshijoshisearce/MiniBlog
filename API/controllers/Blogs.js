@@ -1,6 +1,7 @@
 const { write } = require("fs");
 const Blog = require("../models/Blogs");
-const jwt=require('jsonwebtoken')
+const jwt=require('jsonwebtoken') 
+
 // const Temp = "65ae5a254f046fd681538ccc";
 const controller = {
   async createBlogs(req, res, next) {
