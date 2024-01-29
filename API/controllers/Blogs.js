@@ -53,7 +53,7 @@ const controller = {
     try{
         // console.log("Temp is ", Temp);
         id = req.params.id
-        const blogs = await Blog.findById(id)   // search the blog ID
+        const blogs = await Blog.findById(id).populate('author',['username']);   // search the blog ID
         res.status(201).send(blogs);
     } catch (error){
         next(error);

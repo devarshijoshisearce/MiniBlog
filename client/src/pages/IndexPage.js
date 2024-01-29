@@ -21,10 +21,13 @@ export default function IndexPage() {
   return (
     <>
       {posts.length > 0 ? (
-        posts.map(post => <Post key={post.id} {...post} />)
+        posts.map((post, index) => (
+          <Post key={post.id || index} {...post} />
+        ))
       ) : (
         <h1>No posts available</h1>
       )}
     </>
   );
+  
 }
