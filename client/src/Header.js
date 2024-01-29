@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import { UserContext } from './UserContext';
 import { useNavigate } from "react-router-dom";
+
+
 export default function Header(){
     // const {setUserInfo,userInfo} = useContext(UserContext);
     const {setUserInfo,userInfo} = useContext(UserContext);
@@ -28,7 +30,9 @@ export default function Header(){
     const username = userInfo?.username;
     return (
         <header>
-        <Link to="/" className="logo">Logo</Link>
+        <Link to="/" className="logo"> Logo
+          {/* <img src="/MiniBlog-Logo.png"/> */}
+        </Link>
         <p><b> Welcome {username} </b></p>
         <nav>
           {/* if we have username then next */}
