@@ -498,16 +498,14 @@ input[type="password"] {
   outline: none;
 }
 
-/* button[type="submit"] {
-  width: 100%;
-  padding: 15px 0;
-  background-color: #618264;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-} */
-
 button[type="submit"]:hover {
   background-color: #496945;
 }
+
+/* CSS for Home Page images */
+img {
+  display: block; 
+  width: 100%; 
+  height: auto; 
+}
+
