@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 export default function RegisterPage() {
     const [username, setUsername] = useState('');
@@ -50,12 +52,26 @@ export default function RegisterPage() {
     async function register(ev) {
         ev.preventDefault();
         if (!validateEmail(emailID)) {
-            alert("Please enter a valid email address");
+            Swal.fire({
+                icon: 'warning', // 'success' | 'error' | 'warning' | 'info' | 'question'
+                title: 'Invalid email address',
+                text: 'Please check the entered email address!',
+                showConfirmButton: false,
+                timer: 2000 // Auto close timer in milliseconds (2 seconds in this example)
+            })
+            // alert("Please enter a valid email address");
             return;
         }
 
         if (passwordStrength === 'Weak') {
-            alert("Password is not strong enough. Please choose a stronger password.");
+            Swal.fire({
+                icon: 'warning', // 'success' | 'error' | 'warning' | 'info' | 'question'
+                title: 'Password is not Strong',
+                text: 'Please enter a Strong Password!',
+                showConfirmButton: false,
+                timer: 2000 // Auto close timer in milliseconds (2 seconds in this example)
+            })
+            // alert("Password is not strong enough. Please choose a stronger password.");
             return;
         }
 
@@ -72,10 +88,26 @@ export default function RegisterPage() {
         });
 
         if (response.status === 200) {
-            alert("Registration Successful");
-            navigate("/login"); // Corrected: navigate instead of nav
+            Swal.fire({
+                icon: 'success', // 'success' | 'error' | 'warning' | 'info' | 'question'
+                title: 'Registration Successful',
+                text: 'You have successfully registered!',
+                showConfirmButton: false,
+                timer: 2000 // Auto close timer in milliseconds (2 seconds in this example)
+            }).then(() => {
+                navigate("/login"); // Redirect to login page after registration
+            });
+            // alert("Registration Successful");
+            // navigate("/login"); // Corrected: navigate instead of nav
         } else {
-            alert("Registration Failed");
+            Swal.fire({
+                icon: 'error', // 'success' | 'error' | 'warning' | 'info' | 'question'
+                title: 'Registration Failed',
+                text: 'Please check and try again!',
+                showConfirmButton: false,
+                timer: 2000 // Auto close timer in milliseconds (2 seconds in this example)
+            })
+            // alert("Registration Failed");
         }
     }
 

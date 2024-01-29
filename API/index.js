@@ -8,6 +8,7 @@ require('dotenv').config()
 app.use(express.json())    //to accept json body
 app.use(cookieParser())
 app.use(cors({credentials:true,origin:"http://localhost:3001"}))
+app.use('/uploads',express.static(__dirname+'/uploads'))
 //Just for testing 
 app.get('/',(req,res)=>{
     res.send("This is home page")

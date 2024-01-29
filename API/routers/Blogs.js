@@ -13,5 +13,6 @@ router.get('/viewBlogsbyAuthor/:writer',controller.viewBlogsbyAuthor);      //re
 router.get('/viewBlogsbyAuthorID/:writerid',controller.viewBlogsbyAuthorID);//retrieve all post by a specific user -> user page
 router.put('/deleteBlogsbyID/',controller.deleteBlogsbyID);                 //delete a specific post -> pass postID, authorID, userID as params similar to how data was passed in creating a blog
 router.post('/updateBlogbyID',uploadMiddleWare.single('file'), controller.updateBlogsbyID)                      //update a post -> pass postID, authorID, userID, and the same data as createBLogs.
+router.put('/updateBlog',uploadMiddleWare.single('file'),controller.updateBlog)
 
 module.exports=router
