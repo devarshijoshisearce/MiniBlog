@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
@@ -8,10 +8,16 @@ export default function RegisterPage() {
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
     const [passwordStrength, setPasswordStrength] = useState('');
-    const nav = useNavigate();
+    const [emailError, setEmailError] = useState('');
+    const [touchedFields, setTouchedFields] = useState({});
+    const navigate = useNavigate(); // Corrected: navigate instead of nav
 
     useEffect(() => {
-        checkPasswordStrength(password);
+        if (password) { // Check if password is not empty before calculating strength
+            checkPasswordStrength(password);
+        } else {
+            setPasswordStrength('');
+        }
     }, [password]);
 
     function validateEmail(email) {
@@ -28,6 +34,19 @@ export default function RegisterPage() {
         }
     }
 
+    function handleEmailChange(email) {
+        setEmailID(email);
+        if (email !== '' && !validateEmail(email)) {
+            setEmailError('Please enter a valid email address');
+        } else {
+            setEmailError('');
+        }
+    }
+
+    function handleFieldBlur(field) {
+        setTouchedFields({ ...touchedFields, [field]: true });
+    }
+
     async function register(ev) {
         ev.preventDefault();
         if (!validateEmail(emailID)) {
@@ -40,6 +59,12 @@ export default function RegisterPage() {
             return;
         }
 
+        // Check if any mandatory fields are left empty
+        if (Object.values(touchedFields).some(field => !field)) {
+            alert("Please fill in all mandatory fields.");
+            return;
+        }
+
         const response = await fetch('http://localhost:3000/auth/signup', {
             method: 'POST',
             body: JSON.stringify({ username, password, emailID, name, age }),
@@ -48,7 +73,7 @@ export default function RegisterPage() {
 
         if (response.status === 200) {
             alert("Registration Successful");
-            nav("/login");
+            navigate("/login"); // Corrected: navigate instead of nav
         } else {
             alert("Registration Failed");
         }
@@ -57,64 +82,78 @@ export default function RegisterPage() {
     return (
         <form className="register" onSubmit={register}>
             <h1>Register</h1>
-            <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={username}
-                onChange={ev => setUsername(ev.target.value)}
-                required
-            />
+            <div className="form-group">
+                <label htmlFor="username">Username<span className="required">*</span></label>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    value={username}
+                    onChange={ev => setUsername(ev.target.value)}
+                    onBlur={() => handleFieldBlur('username')}
+                    required
+                />
+                {touchedFields.username && !username && <p className="error">Username is mandatory</p>}
+            </div>
 
-            <input
-                type="text"
-                name="emailID"
-                placeholder="emailID"
-                value={emailID}
-                onChange={(ev) => setEmailID(ev.target.value)}
-                required
-            />
+            <div className="form-group">
+                <label htmlFor="emailID">Email<span className="required">*</span></label>
+                <input
+                    type="text"
+                    name="emailID"
+                    id="emailID"
+                    value={emailID}
+                    onChange={(ev) => handleEmailChange(ev.target.value)}
+                    onBlur={() => handleFieldBlur('emailID')}
+                    required
+                />
+                {touchedFields.emailID && !emailID && <p className="error">Mail ID is mandatory</p>}
+                {emailError && <p className="error">{emailError}</p>}
+            </div>
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={ev => setPassword(ev.target.value)}
-                required
-            />
-            <p>Password Strength: {passwordStrength}</p>
+            <div className="form-group">
+                <label htmlFor="password">Password<span className="required">*</span></label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={ev => setPassword(ev.target.value)}
+                    onBlur={() => handleFieldBlur('password')}
+                    required
+                />
+                {touchedFields.password && password && <p>Password Strength: {passwordStrength}</p>}
+                {touchedFields.password && !password && <p className="error">Password is mandatory</p>}
 
-            <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={name}
-                onChange={ev => setName(ev.target.value)}
-                required
-            />
+            </div>
 
-            <input
-                type="number"
-                name="age"
-                placeholder="Age"
-                value={age}
-                onChange={ev => setAge(ev.target.value)}
-                required
-            />
+            <div className="form-group">
+                <label htmlFor="name">Name<span className="required">*</span></label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={name}
+                    onChange={ev => setName(ev.target.value)}
+                    onBlur={() => handleFieldBlur('name')}
+                    required
+                />
+                {touchedFields.name && !name && <p className="error">Name is mandatory</p>}
+            </div>
 
-            {/* <label className="gender-1" for="cars">Select your Gender</label>
-                <select name="gender" id="gender">
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                </select> */}
-                {/* <div >
-                <p> Select your Gender </p>
-                    <label for="Male" >Male</label>
-                    <input  type="radio" name="gender" value="Male" id="Male"/>
-                    <label for="Female">Female </label>
-                    <input type="radio" name="gender" value="Female" id="Female"/> 
-                </div> */}
+            <div className="form-group">
+                <label htmlFor="age">Age<span className="required">*</span></label>
+                <input
+                    type="number"
+                    name="age"
+                    id="age"
+                    value={age}
+                    onChange={ev => setAge(ev.target.value)}
+                    onBlur={() => handleFieldBlur('age')}
+                    required
+                />
+                {touchedFields.age && !age && <p className="error">Age is mandatory</p>}
+            </div>
 
             <button type="submit">Register</button>
         </form>
