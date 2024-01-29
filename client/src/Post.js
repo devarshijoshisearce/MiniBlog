@@ -1,29 +1,14 @@
-// import {formatISO9075} from "date-fns";
-// import {Link} from "react-router-dom";
-
-// export default function Post({_id,title,summary,cover,content,createdAt,author}) {
-//   // console.log("HEELOOO:"+author.username);
-//   return (
-//     <div className="post">
-//       <div className="texts">
-//         <h2>{title}</h2>
-//         <p className="info">
-//           <a className="author">{author.username}</a>
-//           <time>{formatISO9075(new Date(createdAt))}</time>
-//         </p>
-//         <p className="summary">{summary}</p>
-//       </div>
-//     </div>
-//   );
-// }
-
-import {formatISO9075} from "date-fns";
+import {format} from "date-fns";
 import {Link} from "react-router-dom";
 
-export default function Post({_id,title,summary,cover,content,createdAt,author}) {
+export default function Post({_id,title,summary,img,content,createdAt,author}) {
+  console.log(img)
   return (
     <div className="post">
       <div className="image">
+      <Link to={`/post/${_id}`}>
+          <img src={`http://localhost:3000/${img}`} alt="hello"/>
+      </Link>
       </div>
       <div className="texts">
         <Link to={`/blog/${_id}`} key={_id}>
@@ -31,13 +16,11 @@ export default function Post({_id,title,summary,cover,content,createdAt,author})
         </Link>
         <p className="info">
           <a className="author">{author.username}</a>
-          <time>{formatISO9075(new Date(createdAt))}</time>
+          <time>{format(new Date(createdAt),"MMMM dd, yyyy h:mm a")}</time>
+          {/* <time>{formatISO9075(new Date(createdAt))}</time> */}
         </p>
         <p className="summary">{summary}</p>
       </div>
     </div>
   );
 }
-{/* <Link to={`/post/${_id}`}>
-<img src={'http://localhost:4000/'+cover} alt=""/>
-</Link> */}

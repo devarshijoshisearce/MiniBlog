@@ -8,7 +8,7 @@ export default function EditPost() {
   const [summary,setSummary] = useState('');
   const [content,setContent] = useState('');
   const nav = useNavigate();
-//   const [files, setFiles] = useState('');
+  const [files, setFiles] = useState('');
 //   const [redirect,setRedirect] = useState(false);
 
   useEffect(() => {
@@ -27,22 +27,28 @@ export default function EditPost() {
 
   async function updatePost(ev) {
     ev.preventDefault();
-    // const data = new FormData();
-    // data.set('title', title);
-    // data.set('summary', summary);
-    // data.set('content', content);
-    // data.set('id', id);
-    // if (files?.[0]) {
-    //   data.set('file', files?.[0]);
-    // }
-    const response = await fetch(`http://localhost:3000/blog/createBlogs/${id}`, {
+    const data = new FormData();
+    
+    data.set('title', title);
+    data.set('summary', summary);
+    data.set('content', content);
+    data.set('id', id);
+    
+    if (files?.[0]) {
+      data.set('file', files?.[0]);
+    }
+    const response = await fetch(`http://localhost:3000/blog/updateBlog`, {
       method: 'PUT',
-      body: JSON.stringify(title,summary,content),
+      // body: JSON.stringify(title,summary,content),
+      body:data,
       credentials: 'include',
     });
-    console.log(response);
     if (response.ok) {
-        nav('/blog/viewBlogsbyID'+id);
+      alert("Update successfull")
+      // nav('/blog/viewBlogsbyID'+id);
+      nav("/")
+    }else{
+      alert("Failed")
     }
   }
   return (
@@ -55,8 +61,8 @@ export default function EditPost() {
              placeholder={'Summary'}
              value={summary}
              onChange={ev => setSummary(ev.target.value)} />
-      {/* <input type="file"
-             onChange={ev => setFiles(ev.target.files)} /> */}
+      <input type="file"
+             onChange={ev => setFiles(ev.target.files)} />
       <Editor onChange={setContent} value={content} />
       <button style={{marginTop:'5px'}}>Update post</button>
     </form>
