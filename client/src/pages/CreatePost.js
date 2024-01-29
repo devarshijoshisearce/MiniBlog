@@ -1,92 +1,74 @@
-import { useState } from "react";
-// import ReactQuill from "react-quill";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 import 'react-quill/dist/quill.snow.css';
 import Editor from "../Editor";
 
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, false] }],
-    ['bold', 'italic', 'underline','strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-    ['link', 'image'],
-    ['clean']
-  ],
-};
-const formats = [
-  'header',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image'
-];
-export default function CreatePost(){
-    const [title,setTitle] = useState('');
-    const [summary,setSummary] = useState('');
-    const [content, setContent] = useState('');
-    const [files, setFile] = useState('');
-    // const [redirect, setRedirect] = useState(false);
-    const nav = useNavigate();
-    async function createNewPost(ev){
-      const data = new FormData();
-      data.set('title',title);
-      data.set('summary',summary);
-      data.set('content',content);
-      data.set('file',files[0]); //send only first file
-      ev.preventDefault();
-      console.log(data.get('file').name);
-      // console.log({title,summary,content});
-      
-      const response = await fetch('http://localhost:3000/blog/createBlog',{
-        method:'POST',
-        // body:JSON.stringify({title,summary,content}), //sending as Form data as want file too
-        body:data,
-        credentials:'include',
-      });
-      console.log(data)
-      console.log(await response.json());
-      // if(response.ok){
-      //   console.log("Hello");
-      //   // setRedirect(true);
-      // }
-      console.log(response.status)
-      if(response.status === 200 || response.status===201){
-        alert("Post added Successfully");
-        nav("/");
-    }else{
-        alert("POST addition Failed");
-    }    
+export default function CreatePost() {
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [content, setContent] = useState('');
+  const [files, setFile] = useState('');
+  const nav = useNavigate();
+
+  async function createNewPost(ev) {
+    ev.preventDefault();
+
+    // Check for empty fields
+    if (!title || !summary || !content || !files[0]) {
+      Swal.fire('Error', 'All fields are required.', 'error');
+      return;
     }
-    // if(redirect){
-    //  return <Navigate to={'/'} />
-    // }
-    return (
-        // gotta add route in app.js (1:47:30)
-        //"multipart/form-data" is a specific MIME type used for forms that have a file upload control.
-        //Multipurpose Internet Mail Extensions
-        <form onSubmit={createNewPost} encType="multipart/form-data"> 
-            <input type="title" 
-            placeholder={'Title'}
-            value={title}
-            onChange={ev=> setTitle(ev.target.value)}/>
-            <input type="summary" 
-            placeholder={"Summary"}
-            value={summary}
-            onChange={ev=> setSummary(ev.target.value)}/>
-            <input type="file" 
-            onChange={ev=>setFile(ev.target.files)}/> 
-            {/* <ReactQuill value={content} 
-            onChange={newValue=> setContent(newValue)} 
-            modules={modules} 
-            formats={formats}/> */}
-           
-            <Editor onChange={setContent} value={content} /> 
-{/* 
-<input type="summary" 
-            placeholder={"Content"}
-            value={content}
-            onChange={ev=> setContent(ev.target.value)}/> */}
-            {/* <textarea name="content" id="" cols="30" rows="10"></textarea> */}
-            <button type="submit" style={{marginTop:'5px'}}>Create Post</button>
-        </form>
-    );
+
+    const data = new FormData();
+    data.set('title', title);
+    data.set('summary', summary);
+    data.set('content', content);
+    data.set('file', files[0]);
+
+    try {
+      const response = await fetch('http://localhost:3000/blog/createBlog', {
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Post created successfully',
+          confirmButton: 'success-button',
+          confirmButtonColor: '#79ac78',
+        }).then(() => {
+          nav('/');
+        });
+      } else {
+        Swal.fire('Error', 'Failed to create post.', 'error');
+      }
+    } catch (error) {
+      console.error('Error creating post:', error);
+      Swal.fire('Error', 'Failed to create post. Please try again.', 'error');
+    }
+  }
+  return (
+    <form onSubmit={createNewPost} encType="multipart/form-data">
+      <input
+        type="title"
+        placeholder={'Title'}
+        value={title}
+        onChange={(ev) => setTitle(ev.target.value)}
+      />
+      <input
+        type="summary"
+        placeholder={"Summary"}
+        value={summary}
+        onChange={(ev) => setSummary(ev.target.value)}
+      />
+      <input type="file" onChange={(ev) => setFile(ev.target.files)} />
+      <Editor onChange={setContent} value={content} />
+      <button type="submit" style={{ marginTop: '5px' }}>
+        Create Post
+      </button>
+    </form>
+  );
 }
