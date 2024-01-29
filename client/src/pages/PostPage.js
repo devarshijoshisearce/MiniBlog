@@ -40,6 +40,8 @@ export default function PostPage() {
       <div className="author">by @{postInfo.author.username}</div>
       
       {userInfo._id === postInfo.author._id && (
+        <>
+        <div className="row">
         <div className="edit-row">
           <Link className="edit-btn" to={`/edit/${postInfo._id}`}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -48,6 +50,16 @@ export default function PostPage() {
             Edit this post
           </Link>
         </div>
+        <div className="delete-row">
+        <Link className="delete-btn" to={`/delete/${postInfo._id}`}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 6V4a1 1 0 011-1h6a1 1 0 011 1v2m4 0V4a1 1 0 011-1h6a1 1 0 011 1v2m-3 3v10a2 2 0 01-2 2H8a2 2 0 01-2-2V9m4 0h4"/>
+</svg>
+             Delete this post
+            </Link>
+        </div>
+        </div>
+        </>
       )}
       {/* <div className="image">
         Image here
@@ -56,8 +68,6 @@ export default function PostPage() {
         <img src={`http://localhost:3000/${postInfo.cover}`} alt=""/>
       </div> 
       {/* {/* <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} /> */}
-      
-
 <div className="content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(postInfo.content) }} />
     </div>
   );

@@ -23,6 +23,7 @@ function App() {
           <Route path='/create' element={<CreatePost />} />
           <Route path='/blog/:id' element={<PostPage />} />
           <Route path="/edit/:id" element={<EditPost />} />
+          {/* <Route path="/delete/:id" element={<EditPost />} /> */}
         </Route> 
       </Routes>
     </UserContextProvider>
