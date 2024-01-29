@@ -30,20 +30,21 @@ export default function Header(){
     const username = userInfo?.username;
     return (
         <header>
-        <Link to="/" className="logo"> Logo
-          {/* <img src="/MiniBlog-Logo.png"/> */}
+        <Link to="/" className="logo">
+          <img src="./MiniBlog-Logo.png" className='logoimg'/>
         </Link>
-        <p><b> Welcome {username} </b></p>
         <nav>
           {/* if we have username then next */}
           {username && (
           <>
+          <p><b> Welcome {username} </b></p>
           <Link to="/create" > Create new Post </Link>
           <a onClick={logout}> Logout</a>
           </>
           )}
           {!username && (
             <>
+            <p><b> Welcome to MiniBlog </b></p>
             <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
             </>
