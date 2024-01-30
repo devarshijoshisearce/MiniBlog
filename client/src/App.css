@@ -383,6 +383,7 @@ div.post-page button.delete-btn {
   padding: 15px 30px;
   border-radius: 5px;
   text-decoration: none;
+  margin-top: 0px;
 }
 
 a.edit-btn svg,
@@ -505,7 +506,7 @@ div.image-post img {
 .middle{
   margin-left: auto;
   margin-right: auto;
-  width: 200px;
+  width: 210px;
   text-align: left;
   flex-grow: 1; 
   padding-left: 20px;
