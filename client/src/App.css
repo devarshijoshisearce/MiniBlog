@@ -20,8 +20,6 @@ header {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-
 }
 
 nav {
@@ -507,20 +505,20 @@ div.image-post img {
   margin-left: auto;
   margin-right: auto;
   width: 200px;
-  text-align: center;
+  text-align: left;
+  flex-grow: 1; 
+  padding-left: 20px;
+
 }
 
 .right {
   float: right;
-  width: 300px;
+  width: 330px;
   text-align: right;
 }
 
-.left{
-  float: left;
-  width: 300px;
-  text-align: left;
-}
+
+
 
 
 

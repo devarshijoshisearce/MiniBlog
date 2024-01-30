@@ -49,7 +49,7 @@ export default function Header() {
       <nav>
         {username ? (
           <>
-            <div className='miidle'>
+            <div className='middle'>
               <p className='middle-text'><b>Welcome,  {username} !</b></p> 
               </div>
 
@@ -58,7 +58,7 @@ export default function Header() {
           </>
         ) : (
           <>
-          <div className='miidle'>            
+          <div className='middle'>            
             <p id='middle-text'><b>Welcome to MiniBlog</b></p>
           </div>
             <div className='right'><Link to="/login">Login</Link>
