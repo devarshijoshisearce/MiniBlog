@@ -53,8 +53,10 @@ export default function Header() {
               <p className='middle-text'><b>Welcome,  {username} !</b></p> 
               </div>
 
+            <div className='right'>
             <Link to="/create">Create new Post</Link>
             <a onClick={logout}>Logout</a>
+            </div>
           </>
         ) : (
           <>
