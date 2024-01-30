@@ -42,20 +42,27 @@ export default function Header() {
   return (
     <header>
       <Link to="/" className="logo">
+        <div className='left'>
         <img src="./MiniBlog-Logo.png" className='logoimg' alt="MiniBlog Logo" />
+        </div>
       </Link>
       <nav>
         {username ? (
           <>
-            <p><b>Welcome,  {username} !</b></p>
+            <div className='miidle'>
+              <p className='middle-text'><b>Welcome,  {username} !</b></p> 
+              </div>
+
             <Link to="/create">Create new Post</Link>
             <a onClick={logout}>Logout</a>
           </>
         ) : (
           <>
-            <p><b>Welcome to MiniBlog</b></p>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+          <div className='miidle'>            
+            <p id='middle-text'><b>Welcome to MiniBlog</b></p>
+          </div>
+            <div className='right'><Link to="/login">Login</Link>
+            <Link to="/register">Register</Link></div>
           </>
         )}
       </nav>
